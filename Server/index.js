@@ -38,18 +38,36 @@ app.post('/upload', upload.single('music'), (req, res) => {
         });
 });
 
+app.get('/music', async (req, res) => {
+    try {
+        const tracks = await MusicTrack.find().exec();
+
+        if (tracks.length === 0) {
+            return res.status(404).send('No music tracks found');
+        }
+
+        res.json(tracks);
+    } catch (err) {
+        console.error('Error retrieving music tracks', err);
+        return res.status(500).send('Error retrieving music tracks');
+    }
+});
+
 app.get('/music/:trackId', async (req, res) => {
     const { trackId } = req.params;
 
     try {
-
         const track = await MusicTrack.findById(trackId).exec();
 
         if (!track) {
             return res.status(404).send('Music track not found');
         }
 
-        res.set('Content-Type', 'audio/mpeg');
+        // Set the response headers to indicate it's an audio file
+        res.setHeader('Content-Type', 'audio/mpeg');
+        res.setHeader('Content-Disposition', `attachment; filename="${track.title}.mp3"`);
+
+        // Send the music binary data as the response
         res.send(track.music);
     } catch (err) {
         console.error('Error retrieving music track', err);

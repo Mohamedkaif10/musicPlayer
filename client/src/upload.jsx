@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const UploadMusicPlayer = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [audioSrc, setAudioSrc] = useState('');
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -27,6 +28,7 @@ const UploadMusicPlayer = () => {
 
         if (response.ok) {
           console.log('Music uploaded successfully');
+          setUploadSuccess(true);
           // Handle success
         } else {
           console.error('Error uploading music');
@@ -41,11 +43,11 @@ const UploadMusicPlayer = () => {
 
   return (
     <div>
-      <h2>Music Player</h2>
+      <h2>Music Upload</h2>
       <input type="file" accept=".mp3" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload Music</button>
 
-      {audioSrc && (
+      {audioSrc && !uploadSuccess && (
         <div>
           <h3>Preview:</h3>
           <audio controls>
@@ -54,6 +56,8 @@ const UploadMusicPlayer = () => {
           </audio>
         </div>
       )}
+
+      {uploadSuccess && <p>Upload successful.</p>}
     </div>
   );
 };
