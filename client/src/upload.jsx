@@ -29,14 +29,14 @@ const UploadMusicPlayer = () => {
         if (response.ok) {
           console.log('Music uploaded successfully');
           setUploadSuccess(true);
-          // Handle success
+         
         } else {
           console.error('Error uploading music');
-          // Handle error
+         
         }
       } catch (error) {
         console.error('Error uploading music', error);
-        // Handle error
+       
       }
     }
   };

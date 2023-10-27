@@ -63,11 +63,11 @@ app.get('/music/:trackId', async (req, res) => {
             return res.status(404).send('Music track not found');
         }
 
-        // Set the response headers to indicate it's an audio file
+       
         res.setHeader('Content-Type', 'audio/mpeg');
         res.setHeader('Content-Disposition', `attachment; filename="${track.title}.mp3"`);
 
-        // Send the music binary data as the response
+      
         res.send(track.music);
     } catch (err) {
         console.error('Error retrieving music track', err);
