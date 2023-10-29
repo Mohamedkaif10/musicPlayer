@@ -43,9 +43,9 @@ const MusicPlayer = () => {
         <p>Loading music tracks...</p>
       ) : musicTracks.length > 0 ? (
         <div className="music-player">
-          <audio controls autoPlay>
+          <audio key={musicTracks[currentTrackIndex]._id} controls>
             <source src={`http://localhost:8002/music/${musicTracks[currentTrackIndex]._id}`} type="audio/mpeg" />
-            Your browser does not support the audio element.
+                 Your browser does not support the audio element.
           </audio>
           <div className="music-controls">
             <button onClick={playPreviousTrack} disabled={currentTrackIndex === 0}>
